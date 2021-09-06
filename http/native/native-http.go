@@ -17,7 +17,7 @@ func main() {
 		path := r.URL.Path
 
 		fmt.Fprintf(w, `
-		<div style="margin: 0 auto;width: 500px;" >
+		<div style="margin: 0 auto;width: fit-content;" >
 		 	<h1>Hello, your path is: <span style="color: blue;">%s</span></h1>
 		 	<p>Please see this photo -> <a href="/photo">Interstelar</a></p>
 		 </div>`, path)
