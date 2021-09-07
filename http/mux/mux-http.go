@@ -18,7 +18,7 @@ func main() {
 
 func YourHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-
+	fmt.Println("Hit in home!")
 	http.ServeFile(w, r, "./public/index.html")
 }
 
