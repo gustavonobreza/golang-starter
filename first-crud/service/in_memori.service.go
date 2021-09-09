@@ -12,7 +12,6 @@ var Products []model.Product
 type InMemoryServiceProducts struct{}
 
 func (r *InMemoryServiceProducts) GetAll() []model.Product {
-
 	return Products
 }
 

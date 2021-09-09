@@ -40,11 +40,11 @@ func Routers() *gin.Engine {
 
 	// Home - Last page to do - render ejs or handlebars to manage the CRUD;
 	router.GET("/", productsController.Home)
-	router.GET("/products", productsController.GetAll)
-	router.GET("/products/:id", productsController.GetOne)
-	router.DELETE("/products/:id", productsController.Delete)
+	router.GET("api/products", productsController.GetAll)
+	router.GET("api/products/:id", productsController.GetOne)
+	router.DELETE("api/products/:id", productsController.Delete)
 
-	router.GET("/products/new", productsController.Save)
+	router.GET("api/products/new", productsController.Save)
 
 	return router
 }
