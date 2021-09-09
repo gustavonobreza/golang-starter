@@ -10,18 +10,17 @@ import (
 /*
    GET:
      / - Home
-     /static - Serve static files
-     /products - Json with all products in db
-     /products/:id - Json with infos about one product in db
+     api/products - Json with all products in db
+     api/products/:id - Json with infos about one product in db
 
    POST:
-     /products - Create a product;
+     api/products - Create a product;
 
    PUT:
-     /products/:id - Update one product;
+     api/products/:id - Update one product;
 
    DELETE:
-     /products/:id - Delete one product;
+     api/products/:id - Delete one product;
 
 */
 
