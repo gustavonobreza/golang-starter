@@ -1,0 +1,12 @@
+{
+  "[go]": {
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "editor.autoIndent": "advanced",
+    "editor.tabCompletion": "on"
+  }
+}
