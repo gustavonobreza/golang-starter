@@ -43,6 +43,7 @@ func Routers() *gin.Engine {
 	router.GET("api/products", productsController.GetAll)
 	router.GET("api/products/:id", productsController.GetOne)
 	router.DELETE("api/products/:id", productsController.Delete)
+	router.PUT("api/products/:id", productsController.Update)
 
 	router.GET("api/products/new", productsController.Save)
 

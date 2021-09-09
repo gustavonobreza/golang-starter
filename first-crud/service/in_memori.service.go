@@ -45,6 +45,28 @@ func (r *InMemoryServiceProducts) Delete(id string) ([]model.Product, error) {
 	return Products, nil
 }
 
+func (r *InMemoryServiceProducts) Update(id string, n model.Product) ([]model.Product, error) {
+	product, err := r.GetOne(id)
+
+	if err != nil {
+		return []model.Product{}, err
+	}
+
+	for i, v := range Products {
+		if v.Id == product.Id {
+
+			v.Name = n.Name
+			v.Price = n.Price
+
+			Products[i] = v
+			return Products, nil
+		}
+	}
+
+	return []model.Product{}, errors.New("product not found")
+
+}
+
 func Seed() {
 	id1, id2, id3 := uuid.NewString(), uuid.NewString(), uuid.NewString()
 	Products = append(Products, model.Product{
