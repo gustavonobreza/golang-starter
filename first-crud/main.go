@@ -29,7 +29,8 @@ func main() {
 	service.Seed()
 	router := Routers()
 
-	router.Run(":7000")
+	router.Run(":80")
+	// router.RunTLS(":443", "./server.crt", "./server.key")
 }
 
 func Routers() *gin.Engine {
@@ -37,8 +38,10 @@ func Routers() *gin.Engine {
 	router := gin.Default()
 	var productsController ProductsController
 
-	// Home - Last page to do - render ejs or handlebars to manage the CRUD;
 	router.GET("/", productsController.Home)
+	router.Static("/static", "static/")
+	router.GET("/seed", func(c *gin.Context) { service.Seed(); c.Redirect(303, "/") })
+	router.GET("/flush", func(c *gin.Context) { service.Flush(); c.Redirect(303, "/") })
 	router.GET("api/products", productsController.GetAll)
 	router.GET("api/products/:id", productsController.GetOne)
 	router.DELETE("api/products/:id", productsController.Delete)

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD starter</title>
+  <link href="/static/bootstrap.css" rel="stylesheet">
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+</head>
+
+<body>
+
+  <main class="container-xxl text-center">
+    <div class="pt-3">
+      <h1 class="">Hello world!!!</h1>
+    </div>
+    <div class="row">
+      <div class="col-md-3 text-center ">
+        <a href="/api/products">/api/products</a>
+      </div>
+      <div class="col-md-3 text-center" onclick="() => {getP()}">
+        <h5 onclick="seedP()" style="cursor: pointer;">Seed</p>
+      </div>
+      <div class="col-md-3 text-center" onclick="() => {flushP()}">
+        <h5 onclick="flushP()" style="cursor: pointer;">Flush</p>
+      </div>
+      <div class="col-md-3 text-left ">
+        <p class="productsLength"> -- </p>
+      </div>
+    </div>
+  </main>
+
+  <script src="/static/bootstrap.js"></script>
+
+  <script>
+    const EProducts = document.querySelector('.productsLength')
+
+    function flushP() {
+      fetch("/flush").then(() => {
+        getP()
+      })
+    }
+
+    function seedP() {
+      fetch("/seed").then(() => {
+        getP()
+      })
+    }
+
+    function getP() {
+      fetch("api/products").then((e) => e.json()).then(e => {
+        EProducts.innerHTML = e.data.map(({ name, price }) => `<p>${name} - R$ ${price}</p>`).join("")
+      })
+    }
+    getP()
+  </script>
+</body>
+
+</html>

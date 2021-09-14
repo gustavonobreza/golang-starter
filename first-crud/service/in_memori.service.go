@@ -83,3 +83,7 @@ func Seed() {
 		Price: 1599.99,
 	})
 }
+
+func Flush() {
+	Products = []model.Product{}
+}

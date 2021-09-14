@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -15,12 +16,16 @@ var inMemory service.InMemoryServiceProducts
 type ProductsController struct{}
 
 func (r *ProductsController) Home(c *gin.Context) {
-	c.String(200, "HOME")
+	c.Header("Cache-Control", "no-cache, no-store, must-revalidate")
+	c.Header("Pragma", "no-cache")
+	c.Header("Expires", "0")
+	c.Header("Timestamp", time.Now().UTC().String())
+	c.File("./static/index.html")
 }
 
 func (r *ProductsController) GetAll(c *gin.Context) {
 	allProds := inMemory.GetAll()
-	c.JSON(200, allProds)
+	c.JSON(200, map[string]interface{}{"data": allProds})
 }
 
 func (r *ProductsController) GetOne(c *gin.Context) {
