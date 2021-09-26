@@ -1,1 +1,2 @@
-const oi = ['ola', 'oii']
+const oi = ['ola', 'oii'];
+oi

@@ -4,21 +4,78 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" type="image/svg+xml"
+    href="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CRUD starter</title>
-  <link href="/static/bootstrap.css" rel="stylesheet">
+  <link href="/static/bootstrap.min.css" rel="stylesheet">
 
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+
+  <style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0;
+      /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+      /* Firefox */
+    }
+
+    html {
+      overflow: scroll;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 3.5px;
+      /* Remove scrollbar space */
+      background: transparent;
+      /* Optional: just make scrollbar invisible */
+      border-radius: 5%;
+    }
+
+    /* Optional: show position indicator in red */
+    ::-webkit-scrollbar-thumb {
+      background: #219686;
+    }
+  </style>
 </head>
 
 <body>
 
-  <main class="container-xxl text-center">
-    <div class="pt-3">
-      <h1 class="">Hello world!!!</h1>
+  <main class="text-center">
+
+    <div class="pt-3 mb-2">
+      <h1>Hello!!!</h1>
     </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h5>Create</h5>
+      </div>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <label for="title">Title:</label>
+        <input type="text" id="title" autocomplete="off" placeholder='Ex: MacBook Pro 16"' required />
+      </div>
+      <div class="col-md-4">
+        <label for="price">Price:</label>
+        <input type="number" id="price" autocomplete="off" placeholder='Ex: 1600' required />
+      </div>
+      <div class="col-md-4">
+        <button id="send" class="px-5">Create</button>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-md-3 text-center ">
         <a href="/api/products">/api/products</a>
@@ -30,15 +87,20 @@
         <h5 onclick="flushP()" style="cursor: pointer;">Flush</p>
       </div>
       <div class="col-md-3 text-left ">
-        <p class="productsLength"> -- </p>
+        <p class="productsLength text-start"> </p>
       </div>
     </div>
+
   </main>
 
-  <script src="/static/bootstrap.js"></script>
+  <script src="/static/bootstrap.min.js"></script>
 
   <script>
     const EProducts = document.querySelector('.productsLength')
+    const InputTitle = document.querySelector('#title')
+    const InputPrice = document.querySelector('#price')
+
+    const BtnSend = document.querySelector("#send")
 
     function flushP() {
       fetch("/flush").then(() => {
@@ -53,22 +115,33 @@
     }
 
     function getP() {
-      fetch("api/products").then((e) => e.json()).then(e => {
-        EProducts.innerHTML = e.data.map(({ name, price }) => `<p>${name} - R$ ${price}</p>`).join("")
-      })
-    }
-    getP()
-    function seedP() {
-      fetch("/seed").then(() => {
-        getP()
-      })
+      fetch("api/products").then(e => e.json()).then(e => renderP(e.data))
     }
 
-    function getP() {
-      fetch("api/products").then((e) => e.json()).then(e => {
-        EProducts.innerHTML = e.data.map(({ name, price }) => `<p>${name} - R$ ${price}</p>`).join("")
-      })
+    function createP() {
+      let title = InputTitle.value
+      let price = InputPrice.value
+
+      fetch(`api/products/new?title=${title}&price=${price}`).then(async e => {
+        if (e.ok) {
+          InputTitle.value = ''
+          InputPrice.value = ''
+          getP()
+        } else {
+          throw new Error(await e.text())
+        }
+      }).catch(e => alert(e.message))
+
     }
+
+    function renderP(data) {
+      EProducts.innerHTML = data.map(({ title, price }) => `<p>${title} - R$ ${price}</p>`).join("")
+    }
+
+    BtnSend.addEventListener('click', () => {
+      createP()
+    })
+
     getP()
   </script>
 </body>
