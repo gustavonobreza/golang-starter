@@ -55,7 +55,7 @@ func (r *InMemoryServiceProducts) Update(id string, n model.Product) ([]model.Pr
 	for i, v := range Products {
 		if v.Id == product.Id {
 
-			v.Name = n.Name
+			v.Title = n.Title
 			v.Price = n.Price
 
 			Products[i] = v
@@ -71,15 +71,15 @@ func Seed() {
 	id1, id2, id3 := uuid.NewString(), uuid.NewString(), uuid.NewString()
 	Products = append(Products, model.Product{
 		Id:    id1,
-		Name:  "Cookie",
+		Title: "Cookie",
 		Price: 3.99,
 	}, model.Product{
 		Id:    id2,
-		Name:  "MacBook Pro 16\"",
+		Title: "MacBook Pro 16\"",
 		Price: 1199.00,
 	}, model.Product{
 		Id:    id3,
-		Name:  "RTX 3090 TI",
+		Title: "RTX 3090 TI",
 		Price: 1599.99,
 	})
 }

@@ -39,10 +39,10 @@ func (r *ProductsController) GetOne(c *gin.Context) {
 }
 
 func (r *ProductsController) Save(c *gin.Context) {
-	name, price := c.Query("name"), c.Query("price")
+	title, price := c.Query("title"), c.Query("price")
 
-	if len(name) < 1 || len(price) < 1 {
-		c.String(400, "error: name and price is required")
+	if len(title) < 1 || len(price) < 1 {
+		c.String(400, "error: title and price is required")
 		return
 	}
 
@@ -50,7 +50,7 @@ func (r *ProductsController) Save(c *gin.Context) {
 
 	all, _ := inMemory.Save(model.Product{
 		Id:    uuid.NewString(),
-		Name:  name,
+		Title: title,
 		Price: newPrice,
 	})
 
@@ -76,12 +76,12 @@ func (r *ProductsController) Update(c *gin.Context) {
 		return
 	}
 
-	name, price := c.Query("name"), c.Query("price")
+	title, price := c.Query("title"), c.Query("price")
 
 	var fieldsToUpdate model.Product
 
-	if len(name) > 0 {
-		fieldsToUpdate.Name = name
+	if len(title) > 0 {
+		fieldsToUpdate.Title = title
 	}
 
 	if len(price) > 0 {
@@ -89,19 +89,19 @@ func (r *ProductsController) Update(c *gin.Context) {
 		fieldsToUpdate.Price = newPrice
 	}
 
-	if len(fieldsToUpdate.Name) == 0 && fieldsToUpdate.Price <= 0 {
-		c.String(400, "name or price need to be privided")
+	if len(fieldsToUpdate.Title) == 0 && fieldsToUpdate.Price <= 0 {
+		c.String(400, "title or price need to be privided")
 		return
 	}
 
-	if fieldsToUpdate.Name == "" {
-		fieldsToUpdate.Name = data.Name
+	if fieldsToUpdate.Title == "" {
+		fieldsToUpdate.Title = data.Title
 	} else if fieldsToUpdate.Price == 0 {
 		fieldsToUpdate.Price = data.Price
 	}
 
 	all, e := inMemory.Update(id, model.Product{
-		Name:  fieldsToUpdate.Name,
+		Title: fieldsToUpdate.Title,
 		Price: fieldsToUpdate.Price,
 	})
 
