@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	println("Open http://localhost")
+	println("Open http://localhost to see")
 	http.HandleFunc("/photo", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "Interstelar.jpg")
 		fmt.Println("GET:", "Interstelar photo")

@@ -58,6 +58,18 @@
       })
     }
     getP()
+    function seedP() {
+      fetch("/seed").then(() => {
+        getP()
+      })
+    }
+
+    function getP() {
+      fetch("api/products").then((e) => e.json()).then(e => {
+        EProducts.innerHTML = e.data.map(({ name, price }) => `<p>${name} - R$ ${price}</p>`).join("")
+      })
+    }
+    getP()
   </script>
 </body>
 
